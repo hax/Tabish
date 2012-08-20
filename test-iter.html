@@ -1,0 +1,64 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<!--script src="iterator.js"></script-->
+<script>
+function dump(o) {
+	Object.getOwnPropertyNames(o).forEach(function(name){
+		console.log(name, ':', typeof o[name], '=', o[name])
+	})
+	o = Object.getPrototypeOf(o)
+	if (o == null || o === Object.prototype) return
+	else dump(o)
+}
+</script>
+<script>
+	try {
+		//new Function('test a')
+	} catch(e) {
+		dump(e)
+	}
+</script>
+<script type="application/javascript;version=1.8">
+void function(){
+
+	//var x = Iterator.create({next:function(){return 1}})
+	//console.log(x.next())
+	//console.log(x.next())
+	
+	var a = 'abcdefg'.split('')
+	var it = Iterator(a)
+	var it2 = (v + 1 for ([k, v] in it))
+	//var it3 = it.map(function(e){e[1] + 1})
+	//console.log(Object.getPrototypeOf(it2))
+
+	/*console.log(it.next())
+	console.log(it.next())
+	console.log(it2.next())
+	console.log(it2.next())
+	console.log(it.next())*/
+	
+	//for (var i in it2) console.log(i)
+	//for (var i in it) console.log(i)
+	
+	//console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(Object.getPrototypeOf(it2))))
+
+	var X = function() { return X }
+	X.prototype = Object.getPrototypeOf(X)
+	console.log (X, X instanceof X)
+	
+	function A(){ this.a = 1 }
+	A.prototype.__iterator__ = function() {
+		return {next:1}
+	}
+	
+	
+	var a = new A()
+	var it = Iterator(a)
+	console.log(it)
+	console.log(it.next())
+	console.log(it.next())
+	console.log(it.next())
+	
+}()
+</script>

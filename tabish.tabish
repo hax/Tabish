@@ -1,0 +1,53 @@
+Source
+	(EmptyLine | CommentLine | Block)*
+	EOF | MixedWhiteSpace | Offside
+
+EmptyLine
+	WhiteSpace*
+	EOL
+
+CommentLine
+	WhiteSpace*
+	CommentStart
+	NotEOL*
+	EOL
+
+Block
+	HeaderLine
+	BodyLines
+
+HeaderLine
+	Indent | throw Offside
+	NotWhiteSpace | throw MixedWhiteSpace
+	NotEOL*
+	EOL
+
+BodyLines
+	(EmptyLine | BodyLine | CommentLine)*
+
+BodyLine
+	Indent
+	Tab
+	NotEOL+
+	EOL
+
+Indent
+	Tab*n
+
+WhiteSpace
+	/[\t\v\f\u0020\u0085\u00A0\u1680\u180E\u2000-\u200A\u202F\u205F\u3000\uFDD0-\uFDEF\uFEFF\uFFFE\uFFFF]/
+
+NotWhiteSpace
+	/[^\t\v\f\u0020\u0085\u00A0\u1680\u180E\u2000-\u200A\u202F\u205F\u3000\uFDD0-\uFDEF\uFEFF\uFFFE\uFFFF]/
+	
+EOL
+	/\r\n|\n\r|[\n\r\u2028\u2029]/
+	
+NotEOL
+	/[^\n\r\u2028\u2029]/
+
+Tab
+	/\t/
+	
+CommentStart
+	'//'

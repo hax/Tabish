@@ -1,0 +1,137 @@
+<!doctype html>
+<script src="type.js"></script>
+<script src="iterator.js"></script>
+<script src="matcher.js"></script>
+<script src="tabish.js"></script>
+<style>
+textarea {
+	display: block;
+	min-width: 30em;
+	min-height: 10em;
+	-webkit-tab-size: 4; 
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+}
+</style>
+
+<textarea id="test1">
+header line
+	body line 1
+	body line 2
+	body line 3
+</textarea>
+<input type="button" value="test" onclick="test('test1')">
+
+<textarea id="test2">
+header line
+		body line 1
+		body line 2
+		body line 3
+</textarea>
+<input type="button" value="test" onclick="test('test2')">
+
+<textarea id="test3">
+1
+2
+	2.1
+	2.2
+3
+	3.1
+	3.2
+		3.2.1
+		3.2.2
+	3.3
+		3.3.1
+		3.3.2
+		3.3.3
+4
+</textarea>
+<input type="button" value="test" onclick="test('test3')">
+
+<textarea id="test4">
+header line
+		body line 1
+		body line 2
+	offside!
+</textarea>
+<input type="button" value="test" onclick="test('test4')">
+
+<textarea id="test5">
+
+Hello 1
+
+Hello 2
+	Tab
+
+Hello 3
+	Tabs and
+			More
+				Tabs 1
+				Tabs 2
+				Tabs 3
+		Error
+
+</textarea>
+<input type="button" value="test" onclick="test('test5')">
+
+<textarea id="test6">
+html
+	head
+		title Test
+	body
+		header
+			h1 Test
+			nav
+				ul
+					li
+						a href="/"
+							'home
+					li
+						a href="#a"
+							'Part A
+					li
+						a href="#b"
+							'Part B
+					li
+						a href="#c"
+							'Part C
+		section#a
+			h1 A
+			p
+			p
+			p
+		section#b
+			h1 B
+			p
+			p
+			p
+		section#c
+			h1 C
+			p
+			p
+			p
+</textarea>
+<input type="button" value="test" onclick="test('test6')">
+
+<script>
+function test(id) {
+	var src = document.getElementById(id).value
+	var result = Tabish.parse(src, null, {maxErrors: 2})
+	dump(result)
+}
+
+function dump(result, level) {
+	if (level == null) level = 0
+	for (var i = 0; i < result.length; i++) {
+		var block = result[i]
+		if (block instanceof Error)
+			console.log(block.toString())
+		else
+			console.log(block.value == null ?
+				'_' :
+				new Array(level + 1).join('  ') + block.value.content)
+		if (block.children)
+			dump(block.children, level + 1)
+	}
+}
+</script>
