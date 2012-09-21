@@ -2,7 +2,8 @@
 
 imports: {Iterator;StopIteration} from: 'iterator.js'
 
-exports: function RegExpMatcherIterator(pattern, source) {
+exports: RegExpMatcherIterator
+function RegExpMatcherIterator(pattern, source) {
 	if (!(pattern.global || pattern.sticky)) {
 		throw Error('Pattern should be global or sticky')
 	}

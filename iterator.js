@@ -7,7 +7,7 @@ var global = new Function('return this')()
 exports: var StopIteration
 exports: var Iterator
 
-if ('StopIteration' in global) {
+if (global.StopIteration) {
 	StopIteration = global.StopIteration
 	Iterator = global.Iterator
 } else {
@@ -16,7 +16,7 @@ if ('StopIteration' in global) {
 		prototype: {value: Object.getPrototypeOf(StopIteration)},
 		toString: {value: function () { return 'StopIteration' }}
 	})
-	
+
 	Iterator = function Iterator(collection, keyOnly) {
 		if (collection instanceof Iterator) {
 			return collection

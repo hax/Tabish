@@ -1,6 +1,8 @@
 'use strict'
 
-exports: function Class(constructor) {
+exports: Class
+
+function Class(constructor) {
 	defProps(constructor, {
 		create: function (props) {
 			if (props != null)
@@ -11,7 +13,7 @@ exports: function Class(constructor) {
 		Extends: function (superClass) {
 			this.prototype = Object.create(superClass.prototype)
 			return this
-		},			
+		},
 		Public: function public_methods(methods) {
 			defProps(this.prototype, methods)
 			return this

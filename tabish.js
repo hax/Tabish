@@ -3,12 +3,13 @@ imports: {Class} from: 'type.js'
 imports: {Iterator;StopIteration} from: 'iterator.js'
 imports: {RegExpMatcherIterator} from: 'matcher.js'
 
-exports: function parse(source, processor, option) {
-	console.log(StopIteration)
+exports: Tabish
+exports: parse
+function parse(source, processor, option) {
 	if (source == null) return null
 	if (option == null) option = Object.create(defaultOption)
 	if (processor == null) processor = defaultProcessor
-	
+
 	var result = []
 	var it = BlocksIterator(source, option)
 	while (true) {
@@ -43,13 +44,13 @@ function defaultProcessor(block, context) {
 }
 
 function BlocksIterator(source, option) {
-	
+
 	option = override(option, defaultOption)
 	var indent, nextHeader
 	//var line, lineIndent
-	
+
 	var lines = LinesIterator(source)
-	
+
 	function trimTabs(line, max) {
 		if (max == null) max = Infinity
 		var tab = option.tab instanceof RegExp ?
@@ -66,7 +67,7 @@ function BlocksIterator(source, option) {
 		line.content = s
 		return n
 	}
-	
+
 	return Iterator.create({
 		next: function() {
 			var header
@@ -138,7 +139,7 @@ function LinesIterator(source) {
 	}
 	var lines = source.lines || source
 	var context = source.context || {start:1}
-	
+
 	function Line(content, index) {
 		//console.log('new line', index, ':', content)
 		return Line.create({
@@ -148,12 +149,12 @@ function LinesIterator(source) {
 	}
 	Class(Line).Public(context).Public({
 		toString: function() {
-			return (this.fileName ? this.fileName + ':' : 'line ') + 
+			return (this.fileName ? this.fileName + ':' : 'line ') +
 				(this.start + this.index) +
 				': "' + this.content + '"'
 		}
 	})
-	
+
 	if (typeof lines === 'string') {
 		return RegExpMatcherIterator(/(.*)(\r\n|\n|\r|$)/g, lines).map(function(m, i){
 			return new Line(m[1], i)
@@ -165,13 +166,13 @@ function LinesIterator(source) {
 	} else {
 		throw Error('Invalid argument:', source)
 	}
-	
+
 }
 
 function isEmpty(line) {
 	return /^\s*$/.test(line.content)
 }
-	
+
 function override(obj, base) {
 	var o = Object.create(base)
 	if (obj != null) {
@@ -227,7 +228,7 @@ Class(ProcessorError).Extends(Error).Public({
 	}
 })
 
-exports: function Tabish() {
+function Tabish() {
 }
 
 function Parser(ruleSet) {
