@@ -36,18 +36,17 @@ Indent
 
 WhiteSpace
 	/[\t\v\f\u0020\u0085\u00A0\u1680\u180E\u2000-\u200A\u202F\u205F\u3000\uFDD0-\uFDEF\uFEFF\uFFFE\uFFFF]/
-
 NotWhiteSpace
 	/[^\t\v\f\u0020\u0085\u00A0\u1680\u180E\u2000-\u200A\u202F\u205F\u3000\uFDD0-\uFDEF\uFEFF\uFFFE\uFFFF]/
-	
+
 EOL
 	/\r\n|\n\r|[\n\r\u2028\u2029]/
-	
+
 NotEOL
 	/[^\n\r\u2028\u2029]/
 
 Tab
 	/\t/
-	
+
 CommentStart
 	'//'
